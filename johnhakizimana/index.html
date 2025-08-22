@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Dashboard</title>
+  <link rel="stylesheet" href="html.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <!-- Key Performance Card -->
+      <div class="kpis">
+        <div class="kpi">
+          <div class="value" id="kpiSales">UGX 50,000,000</div>
+          <div class="label">Sales</div>
+        </div>
+        <div class="kpi">
+          <div class="value" id="kpiOrders">UGX 15,000,000</div>
+          <div class="label">Orders</div>
+        </div>
+        <div class="kpi ok">
+          <div class="value" id="kpiInStock">UGX 42,000,000</div>
+          <div class="label">In stock</div>
+        </div>
+        <div class="kpi bad">
+          <div class="value" id="kpiOOS">5</div>
+          <div class="label">Out of stock</div>
+        </div>
+      </div>
+
+      <!-- ADD PRODUCT FORM -->
+      <div class="panel">
+        <h3>Add Product</h3>
+        <form id="productForm" novalidate>
+          <div class="fields">
+            <div class="field">
+              <label for="name">Product Name</label>
+              <input id="name" type="text" placeholder="Product Name" required />
+              <div class="error" id="err-name">Required</div>
+            </div>
+            <div class="field">
+              <label for="category">Category</label>
+              <input id="category" type="text" placeholder="Category" required />
+              <div class="error" id="err-category">Required</div>
+            </div>
+            <div class="field">
+              <label for="price">Price (UGX)</label>
+              <input id="price" type="number" min="0" step="1" placeholder="Price" required />
+              <div class="error" id="err-price">Enter a valid price</div>
+            </div>
+            <div class="field">
+              <label for="qty">Quantity</label>
+              <input id="qty" type="number" min="0" step="1" placeholder="Quantity" required />
+              <div class="error" id="err-qty">Enter a valid quantity</div>
+            </div>
+            <div class="field">
+              <label for="color">Color</label>
+              <input id="color" type="text" placeholder="Color" />
+            </div>
+            <div class="field">
+              <label for="image">Upload Image</label>
+
+            </div>
+          </div>
+          <div class="row-actions">
+            <button type="submit" class="btn save">SAVE</button>
+            <button type="button" class="btn clear" id="clearBtn">CLEAR</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <table id="productTable">
+        <thead>
+          <tr>
+            <th style="width:16%">ID</th>
+            <th>NAME</th>
+            <th style="width:22%">CATEGORY</th>
+            <th style="width:18%">PRICE (UGX)</th>
+            <th style="width:14%">QUANTITY</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <!-- rows -->
+          <tr>
+            <td>#645341</td>
+            <td>Sumsang s25+ Ultra</td>
+            <td>Smart Phones</td>
+            <td>6,900,000</td>
+            <td>981</td>
+          </tr>
+          <tr>
+            <td>#645346</td>
+            <td>Gucci XXL Shirt</td>
+            <td>Fashion</td>
+            <td>500,000</td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>#645342</td>
+            <td>XL Zara Shirt</td>
+            <td>Fashion</td>
+            <td>600,000</td>
+            <td>56</td>
+          </tr>
+          <tr>
+            <td>#645344</td>
+            <td>iPhone 15</td>
+            <td>Smart Phones</td>
+            <td>7,900,000</td>
+            <td>752</td>
+          </tr>
+          <tr>
+            <td>#645343</td>
+            <td>Smart home Curtain</td>
+            <td>Interior Design</td>
+            <td>500,000</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td>#645345</td>
+            <td>Spectrum Laptop 14.6 Inc</td>
+            <td>Laptops</td>
+            <td>15,800,000</td>
+            <td>144</td>
+          </tr>
+        </tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="html.js"></script>
+</body>
+
+</html>
