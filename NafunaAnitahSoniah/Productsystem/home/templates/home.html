@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Management</title>
+        <style>
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .stats {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd; /* Added grey border */
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background: #333;
+            color: white;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: #f28c38;
+            color: white;
+        }
+
+        .btn-clear {
+            background: #ccc;
+        }
+
+        .error {
+            color: red;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Hidden by default */
+        .form-group.has-error .error {
+            display: block;
+        }
+
+        /* Show only when error exists */
+        .success {
+            color: green;
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .upload-image-btn {
+            background: #f0f0f0;
+            /* Light gray background */
+            color: #888;
+            /* Muted gray text */
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            text-align: center;
+            cursor: pointer;           
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        .upload-image-btn:hover {
+            background: #e0e0e0;
+            /* Slight hover effect */
+        }
+        /* Style for side-by-side layout */
+        .form-group.inline-fields {
+            display: flex;
+            gap: 10px; 
+        }
+        .form-group.inline-fields input[type="text"],
+        .form-group.inline-fields .upload-image-btn {
+            flex: 1; 
+            width: auto;
+        }
+        /* a style for invalid inputs */
+        .form-group input:invalid {
+            border: 2px solid red;
+            background-color: rgb(246, 245, 245);
+        }
+
+        .form-group input:focus:invalid {
+            outline: none;
+            box-shadow: 0 0 3px rgb(239, 237, 237);
+        }
+
+        /* a style for valid inputs */
+        .form-group input:valid {
+            border: 2px solid #05ec2c;
+        }
+
+        /* File input styling */
+        .form-group input[type="file"] {
+            border: 2px solid #ddd;
+            padding: 8px;
+        }
+
+    </style>
+  
+</head>
+
+<body>
+    <div class="container">
+        <div class="stats">
+            <h2>Product Statistics</h2>
+            <div>Stock Value: UGX {{ stock_in_shs|default:"0" }}</div>
+            <div>Available Products: {{ available_products|default:"0" }}</div>
+            <div>Total Stock: {{ Stock_in_figures|default:"0" }} <span>{{ Stock_in_figures|yesno:"In stock,Out of stock"
+                    }}</span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Add Product</h3>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="{% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group {% if errors.name %}has-error{% endif %}">
+                    <input type="text" name="name" value="{{ form_data.name }}" placeholder="Product Name" >
+                    {% if errors.name %}<span class="error">{{ errors.name }}</span>{% endif %}
+                </div>
+                <div class="form-group {% if errors.category %}has-error{% endif %}">
+                    <input type="text" name="category" value="{{ form_data.category }}" placeholder="Category">
+                    {% if errors.category %}<span class="error">{{ errors.category }}</span>{% endif %}
+                </div>
+                <div class="form-group {% if errors.price %}has-error{% endif %}">
+                    <input type="number" name="price" value="{{ form_data.price }}" placeholder="Price" step="0.01" >
+                
+                    {% if errors.price %}<span class="error">{{ errors.price }}</span>{% endif %}
+                </div>
+                <div class="form-group {% if errors.quantity %}has-error{% endif %}">
+                    <input type="number" name="quantity" value="{{ form_data.quantity }}" placeholder="Quantity"
+                        >
+                    {% if errors.quantity %}<span class="error">{{ errors.quantity }}</span>{% endif %}
+                </div>
+               <div class="form-group inline-fields">
+                    <input type="text" name="color" value="{{ form_data.color }}" placeholder="Color">
+                    <label class="upload-image-btn">
+                        Upload Image
+                        <input type="file" name="image" accept="image/*" style="display: none;">
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-save">SAVE</button>
+                <button type="reset" class="btn btn-clear">CLEAR</button>
+            </form>
+        </div>
+    </div>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price (UGX)</th>
+            <th>Quantity</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>PDCT00{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
