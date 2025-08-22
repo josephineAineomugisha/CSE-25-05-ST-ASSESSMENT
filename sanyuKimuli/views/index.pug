@@ -1,0 +1,80 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Document
+  link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/styles/index.css')
+.container.text-center
+  .row
+    .col
+      .row.row-cols-1.row-cols-md-2.g-4
+        .col
+          .card
+            .card-body
+              h5.card-title UGX 50,000,000
+              p.card-text Sales
+        .col
+          .card
+            .card-body
+              h5.card-title UGX 15,000,000
+              p.card-text Orders
+        .col
+          .card
+            .card-body
+              h5.card-title#instock UGX 42,000,000
+              p.card-text In stock
+        .col
+          .card
+            .card-body
+              h5.card-title#outstock 5 
+              p.card-text Out of stock
+    .col
+      #productCard.card
+        h3 Add Product
+        if error
+            .alert.alert-danger(role="alert")
+                |   #{error}
+
+        form#productForm(action='/add' method='POST')
+          .mb-3
+            label.labels(for='name')
+            input#name.inputs(type='text' name='name' placeholder='Product Name')
+            .invalid-feedback Please insert name
+          .mb-3
+            label.labels(for='category')
+            input#category.inputs(type='text' name='category' placeholder='Product Category')
+            .invalid-feedback Please insert category
+          .mb-3
+            label.labels(for='category')
+            input#price.inputs(type='number' name='price' placeholder='Price')
+            .invalid-feedback Please insert price
+          .mb-3
+            label.labels(for='quantity')
+            input#quantity.inputs(type='number' name='quantity' placeholder='Quantity')
+            .invalid-feedback Please insert quantity
+          .mb-3
+            label.labels(for='color')
+            input#color.inputs(type='text' name='color' placeholder='Color')
+            .invalid-feedback Please insert color
+          .mb-3
+            label.labels(for='image')
+            input#color.inputs(type='text' name='image' placeholder='Upload Image')
+            .invalid-feedback Please insert image
+          button#saveBtn(type='submit') SAVE
+          button#clearBtn(type='reset') CLEAR
+table
+    thead
+        tr
+            th NAME
+            th CATEGORY
+            th PRICE (UGX)
+            th QUANTITY
+    tbody
+        each product in products
+            tr
+                td= product.name
+                td= product.category
+                td= product.price
+                td=product.quantity
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js')
