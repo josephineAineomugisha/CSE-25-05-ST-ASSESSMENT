@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Inventory Dashboard</title>
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f3f4f6;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+    }
+
+    .metric-card {
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .metric-split {
+      border-left: 1px solid #e5e7eb;
+      height: 48px;
+      margin: 0 24px;
+    }
+
+    .stat-label {
+      color: #6b7280;
+      text-transform: none;
+      letter-spacing: .02em;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .form-card {
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-save {
+      background: #ea7a33;
+      border-color: #ea7a33;
+      font-weight: 600;
+    }
+
+    .btn-save:hover {
+      background: #d7671d;
+      border-color: #d7671d;
+    }
+
+    .btn-clear {
+      background: #d1d5db;
+      border-color: #d1d5db;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .kpi-card {
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .kpi-green {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .kpi-red {
+      color: #ef4444;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .table thead th {
+      background: #0f0f0f;
+      color: #fff;
+      border-color: #0f0f0f;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .table td,
+    .table th {
+      vertical-align: middle;
+    }
+
+    .custom-file-input~.custom-file-label::after {
+      content: "Upload";
+    }
+
+    .alert-success {
+      background-color: #198754;
+      /* darker green */
+      color: #fff;
+      border-color: #157347;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-4">
+    <div class="row">
+      <!-- Left: Sales/Orders metric card -->
+      <div class="col-lg-6 mb-4">
+        <div class="card metric-card p-4 h-100">
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <div class="d-flex align-items-center">
+              <div class="text-center px-3 px-md-4">
+                <div class="stat-value">UGX 50,000,000</div>
+                <div class="stat-label">Sales</div>
+              </div>
+              <div class="metric-split d-none d-md-block"></div>
+              <div class="text-center px-3 px-md-4">
+                <div class="stat-value">UGX 15,000,000</div>
+                <div class="stat-label">Orders</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Add Product form -->
+      <div class="col-lg-6 mb-4">
+        <div class="card form-card p-3 p-md-4">
+          <h5 class="mb-3 font-weight-bold">Add Product</h5>
+
+          <!-- Success Alert -->
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          <form id="productForm" action="#" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" class="form-control" name="name" placeholder="Product Name" required>
+              <div class="invalid-feedback">Invalid field.</div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="category" placeholder="Category" required>
+              <div class="invalid-feedback">Invalid field.</div>
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" name="price" placeholder="Price" min="1" required>
+              <div class="invalid-feedback">Invalid field.</div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="number" class="form-control" name="quantity" placeholder="Quantity" min="1" required>
+                <div class="invalid-feedback">Invalid field.</div>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="color" placeholder="Color" required>
+                <div class="invalid-feedback">Invalid field.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image" name="image" required>
+                <label class="custom-file-label" for="image">Upload Image</label>
+                <div class="invalid-feedback">Invalid field.</div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <button type="submit" class="btn btn-save mr-3">SAVE</button>
+              <button type="reset" class="btn btn-clear">CLEAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs row -->
+    <div class="row flex-grow">
+      <div class="col-md-6 mb-4">
+        <div class="card kpi-card p-4 text-center h-100">
+          <div class="kpi-green">UGX 42,000,000</div>
+          <div class="stat-label">In stock</div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="card kpi-card p-4 text-center h-100">
+          <div class="kpi-red">5</div>
+          <div class="stat-label">Out of stock</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products table -->
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="width:120px">ID</th>
+                <th>NAME</th>
+                <th style="width:200px">CATEGORY</th>
+                <th style="width:180px">PRICE (UGX)</th>
+                <th style="width:140px">QUANTITY</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+              <tr>
+                <td>#{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.price|floatformat:0}}</td>
+                <td>{{ product.quantity }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">No products yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Show chosen filename on custom file input
+    $('.custom-file-input').on('change', function () {
+      var fileName = $(this).val().split('\\\\').pop();
+      $(this).next('.custom-file-label').addClass("selected").html(fileName || 'Upload Image');
+    });
+
+    // Custom validation with green borders for valid fields
+    document.getElementById("productForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let form = e.target;
+      let isValid = true;
+
+      form.querySelectorAll("input[required]").forEach(input => {
+        if (
+          !input.value.trim() ||
+          (input.type === "number" && input.value <= 0) ||
+          (input.type === "file" && input.files.length === 0)
+        ) {
+          input.classList.add("is-invalid");
+          input.classList.remove("is-valid");
+          isValid = false;
+        } else {
+          input.classList.remove("is-invalid");
+          input.classList.add("is-valid"); // ✅ show green border for valid
+        }
+      });
+
+      if (isValid) {
+        alert("Form submitted successfully!");
+        form.submit();
+      }
+    });
+
+    // Reset clears validation states
+    document.getElementById("productForm").addEventListener("reset", function (e) {
+      e.target.querySelectorAll("input").forEach(input => {
+        input.classList.remove("is-invalid", "is-valid");
+        if (input.type === "file") {
+          $(input).next('.custom-file-label').html('Upload Image');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
