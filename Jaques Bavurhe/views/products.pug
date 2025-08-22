@@ -1,0 +1,152 @@
+
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Add Product
+  link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet')
+  style.
+    body {
+    background-color: #eeecec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    }
+    .btn1 {
+    background-color: rgb(237, 85, 30);
+    color: #fff;
+    font-size: 110%;
+    font-weight: 600;
+    }
+    .form-container {
+    /* max-width: 600px; */
+    /* margin: 40px auto; */
+    padding: 20px;
+    border: 1px solid #cecece;
+    border-radius: 8px;
+    background: #fff;
+    }
+    .price-container {
+    padding: 20px;
+    border: 1px solid #cecece;
+    border-radius: 8px;
+    background: #fff;
+    height: 280px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    }
+    .price-container2 {
+    padding: 20px;
+    border: 1px solid #cecece;
+    border-radius: 8px;
+    background: #fff;
+    height: 100px
+    }
+    .btn2 {
+    background-color: #bbc2c8;
+    color: #000;
+    font-size: 110%;
+    font-weight: 600;
+    }
+    .stat-card {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    }
+    .stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    }
+    .stat-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    }
+.container
+  .row
+    .col
+      .price-container
+        .stat-card
+          div
+            .row
+              .col
+                .stat-value.text-dark UGX 50,000,000
+                .stat-label Sales
+              .col
+                .stat-value.text-dark UGX 15,000,000
+                .stat-label Orders
+      .row.mt-3
+        .col
+          .price-container2
+        .col
+          .price-container2
+    .col
+      .form-container
+        h4.mb-3 Add Product
+        form#productForm(action='/products/add' method='POST')
+          .mb-3
+            input#productName.form-control(type='text' name='productName' placeholder='Product Name')
+            .invalid-feedback Invalid field
+          .mb-3
+            input#category.form-control(type='text' name='category' placeholder='Category')
+            .invalid-feedback Invalid field
+          .mb-3
+            input#price.form-control(type='number' name='price' placeholder='Price')
+            .invalid-feedback Invalid field
+          .mb-3
+            input#quantity.form-control(type='number' name='quantity' placeholder='Quantity')
+            .invalid-feedback Invalid field
+          .row
+            .col
+              .mb-3
+                input#color.form-control(type='text' name='color' placeholder='Color / Variant')
+                .invalid-feedback Invalid field
+            .col
+              .mb-3
+                input#image.form-control(type='text' name='image' placeholder='Image URL')
+                .invalid-feedback Invalid field
+          .d-flex.justify-content-between.gap-2
+            button.btn.btn1.w-50(type='submit') SAVE
+            button.btn.btn2.w-50(type='reset') CLEAR
+
+.container.mt-4
+    h3 Product List
+    table.table.table-striped.table-bordered
+      thead.table-dark
+        tr
+          th ID
+          th NAME
+          th CATEGORY
+          th PRICE (UGX)
+          th QUANTITY
+      tbody#productTableBody
+        each product in products
+          tr
+            td= product._id
+            td= product.productName
+            td= product.category
+            td= product.price.toFixed(2)
+            td= product.quantity              
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js')
+script.
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("productForm");
+    form.onsubmit = function () {
+      let inputs = form.querySelectorAll("input");
+      let valid = true;
+
+      inputs.forEach(input => {
+        if (!input.value.trim()) {
+          input.style.borderColor = "red";
+          valid = false;
+        } else {
+          input.style.borderColor = "green";
+        }
+      });
+
+      return valid; // Prevents submission only if validation fails
+    };
+  });

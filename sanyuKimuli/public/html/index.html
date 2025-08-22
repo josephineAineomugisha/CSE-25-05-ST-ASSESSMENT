@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/CSE-25-05-ST-ASSESSMENT/sanyuKimuli/public/styles/index.css">
+</head>
+<body>
+    <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">UGX</h5>
+        <p class="card-text">Sales</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">UGX</h5>
+        <p class="card-text">Orders</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">UGX</h5>
+        <p class="card-text">In stock</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"> </h5>
+        <p class="card-text">Out of stock</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="col">
+     <div class="card" id="productCard">
+        <h3>Add Product</h3>
+      <form>
+  <div class="mb-3">
+    <label for="name" class="labels"></label>
+    <input type="text" class="inputs" id="name" name="name" placeholder="Product Name">
+  </div>
+  <div class="mb-3">
+    <label for="category" class="labels"></label>
+    <input type="text" class="inputs" id="category" name="category" placeholder="Product Category">
+  </div>
+    <div class="mb-3">
+    <label for="category" class="labels"></label>
+    <input type="number" class="inputs" id="price" name="price" placeholder="Price">
+  </div>
+    <div class="mb-3">
+    <label for="quantity" class="labels"></label>
+    <input type="number" class="inputs" id="quantity" name="quantity" placeholder="Quantity">
+  </div>
+    <div class="mb-3">
+    <label for="color" class="labels"></label>
+    <input type="text" class="inputs" id="color" name="color" placeholder="Color">
+  </div>
+  <button type="submit" id="saveBtn">SAVE</button>
+  <button type="reset" id="clearBtn">CLEAR</button>
+</form>
+</div>
+    </div>
+  </div>
+  </div>
+
+  <table>
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>CATEGORY</th>
+            <th>PRICE (UGX)</th>
+            <th>QUANTITY</th>
+        </tr>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+    </thead>
+  </table>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('productForm').addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const price = document.getElementById('price').value;
+        const category = document.getElementById('category').value;
+        const quantity = document.getElementById('quantity').value;
+        const color = document.getElementById('color').value;
+        const errorMsg = document.getElementById('errorMsg')
+
+        if(!name || !category || !price || !quantity || !color) {
+            errorMsg.textContent = "invalid field"
+            return;
+        }
+
+        errorMsg.textContent = "";
+        alert("Form submitted succcessfully")
+    })
+  </script>
+</body>
+</html>

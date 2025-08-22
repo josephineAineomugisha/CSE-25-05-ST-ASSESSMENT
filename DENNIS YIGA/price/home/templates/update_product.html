@@ -1,0 +1,23 @@
+ <form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="text" name="name" value="{{ product.name }}" class="form-control mb-2">
+  <input type="text" name="category" value="{{ product.category }}" class="form-control mb-2">
+  <input type="number" name="price" value="{{ product.price }}" class="form-control mb-2">
+  <input type="number" name="quantity" value="{{ product.quantity }}" class="form-control mb-2">
+  <input type="text" name="color" value="{{ product.color }}" class="form-control mb-2">
+  <input type="file" name="image" class="form-control mb-2">
+  <button type="submit" class="btn btn-primary">Update</button>
+</form>
+    <button type="reset" class="btn btn-secondary">CLEAR</button>
+    </form>
+
+    <div class="container mt-3">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>

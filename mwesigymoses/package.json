@@ -1,0 +1,19 @@
+{
+  "name": "mwesigymoses",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "moses",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.2",
+    "pug": "^3.0.3"
+  }
+}

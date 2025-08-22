@@ -1,0 +1,30 @@
+{
+
+  "scripts": {
+
+    "start": "node app.js"
+
+  },
+
+  "dependencies": {
+
+    "express": "^4.21.2",
+
+    "mongoose": "^8.17.2",
+
+    "passport": "^0.7.0"
+
+  },
+
+  "devDependencies": {
+
+    "nodemon": "^3.0.1"
+
+  },
+
+  "author": "Veronique Mashama",
+
+  "license": "MIT"
+
+}
+
