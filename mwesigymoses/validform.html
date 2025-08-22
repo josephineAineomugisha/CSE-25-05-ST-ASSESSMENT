@@ -1,0 +1,177 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Document
+        style.
+            body {
+                background: #f5f6f7;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+            .container {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 40px;
+                max-width: 1200px;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .cards-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                flex: 1;
+                max-width: 600px;
+            }
+            .card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                padding: 20px 16px;
+                text-align: center;
+                transition: transform 0.2s;
+            }
+            .card:hover {
+                transform: translateY(-5px);
+            }
+            .card h2 {
+                margin: 0 0 8px 0;
+                font-size: 1.5em;
+                color: #f28c38;
+            }
+            .card p {
+                margin: 0;
+                color: #555;
+            }
+            .form-container {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                padding: 32px 24px;
+                flex: 1;
+                max-width: 400px;
+            }
+            h2 {
+                text-align: center;
+                margin-bottom: 24px;
+            }
+            form label {
+                display: block;
+                margin-top: 16px;
+                margin-bottom: 4px;
+                font-weight: 500;
+            }
+            form input, form select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1em;
+                margin-bottom: 8px;
+            }
+            .form-actions {
+                display: flex;
+                gap: 16px;
+                margin-top: 16px;
+            }
+            button {
+                flex: 1;
+                padding: 12px 0;
+                border: none;
+                border-radius: 4px;
+                font-size: 1em;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.2s;
+            }
+            button[type="submit"] {
+                background: #f28c38;
+                color: #fff;
+            }
+            button[type="submit"]:hover {
+                background: #e07b27;
+            }
+            button[type="reset"] {
+                background: #d3d3d3;
+                color: #222;
+            }
+            button[type="reset"]:hover {
+                background: #c2c2c2;
+            }
+            .error {
+                color: #e74c3c;
+                font-size: 0.95em;
+                margin-top: 8px;
+                text-align: center;
+            }
+
+    body
+        .container
+            .cards-container
+                .card
+                    h2 50,000,000
+                    p sales
+                .card
+                    h2 50,000,000
+                    p orders
+                .card
+                    h2 42,000,000
+                    p instock
+                .card
+                    h2 5,000,000
+                    p outofstock
+            
+            .form-container
+                h2 Add Product
+                form(action="/" method="post" id="form1")
+                    label(for="name") Name:
+                    input(type="text" id="name" placeholder="Enter your name")
+                    label(for="product") Product:
+                    select(name="category" id="category")
+                        option(value="") Select category
+                        option(value="smartphones") Smart phones
+                        option(value="fashion") Fashion
+                        option(value="interior design") Interior design
+                        option(value="laptops") Laptops
+                    label(for="price") Price:
+                    input(type="number" id="price" placeholder="Enter price")
+                    label(for="quantity") Quantity:
+                    input(type="number" id="quantity" placeholder="Quantity")
+                    .form-actions
+                        button(type="submit") Save
+                        button(type="reset") Clear
+                    p#errorMsg.error
+        script.
+            const form = document.getElementById('form1');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const category = document.getElementById('category').value;
+                const quantity = Number(document.getElementById('quantity').value);
+                const price = Number(document.getElementById('price').value);
+                const errorMsg = document.getElementById('errorMsg');
+                errorMsg.textContent = "";
+                if (!name || !category) {
+                    errorMsg.textContent = "Please fill out all the fields";
+                    return;
+                }
+                if (price < 0) {
+                    errorMsg.textContent = "Price must be a positive number";
+                    return;
+                }
+                if (quantity < 0) {
+                    errorMsg.textContent = "Quantity must be a positive number";
+                    return;
+                }
+                form.submit();
+            });

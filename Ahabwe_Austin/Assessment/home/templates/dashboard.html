@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<style>
+    .summary-card {
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        padding: 40px 0 30px 0;
+        margin-bottom: 20px;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .summary-card h3 {
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+    .summary-card p {
+        color: #888;
+        margin-bottom: 0;
+        font-size: 1.1rem;
+    }
+    .summary-green {
+        color: #1bc47d;
+        font-weight: 700;
+    }
+    .summary-red {
+        color: #e53935;
+        font-weight: 700;
+    }
+    .add-product-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        padding: 30px 30px 20px 30px;
+        min-width: 400px;
+    }
+    .save-btn {
+        background-color: #f58220;
+        color: #fff;
+        font-weight: 700;
+        border: none;
+        width: 48%;
+        font-size: 1.1rem;
+    }
+    .clear-btn {
+        background-color: #d3d3d3;
+        color: #222;
+        font-weight: 700;
+        border: none;
+        width: 48%;
+        font-size: 1.1rem;
+    }
+    .product-table th, .product-table td {
+        vertical-align: middle !important;
+        font-size: 1.05rem;
+    }
+    .product-table th {
+        background: #000;
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .product-table td {
+        background: #fff;
+    }
+    .product-table tr {
+        border-bottom: 1px solid #bbb;
+    }
+    .product-table {
+        margin-top: 30px;
+        background: #fff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .form-control, .form-select {
+        border-radius: 4px;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        padding: 10px 12px;
+    }
+    .form-row {
+        display: flex;
+        gap: 10px;
+    }
+    @media (max-width: 991px) {
+        .add-product-card {
+            min-width: unset;
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="container-fluid" style="background: #f7f8fa; min-height: 100vh; padding-top: 40px;">
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <div class="summary-card border-end">
+                        <h3>UGX Total Sales</h3>
+                        <p>Sales</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="summary-card">
+                        <h3>UGX {{ total_orders|intcomma }}</h3>
+                        <p>Orders</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0 mt-3">
+                <div class="col-md-6">
+                    <div class="summary-card summary-green" style="background: #f8fffa;">
+                        <h3>UGX {{ in_stock_value|intcomma }}</h3>
+                        <p>In stock</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="summary-card summary-red" style="background: #fff8f8;">
+                        <h3>{{ out_of_stock }}</h3>
+                        <p>Out of stock</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 d-flex align-items-start justify-content-center">
+            <div class="add-product-card mt-0 mt-lg-3">
+                <h5 class="mb-4" style="font-weight: 700;">Add Product</h5>
+                <form action=""  method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        {{ form.name }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form.category }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form.price }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form.quantity }}
+                    </div>
+                    <div class="form-row mb-3">
+                        <div style="flex:1;">
+                            {{ form.color }}
+                        </div>
+                        {% if form.image %}
+                        <div style="flex:1;">
+                            {{ form.image }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn save-btn">SAVE</button>
+                        <button type="reset" class="btn clear-btn">CLEAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <table class="table table-bordered product-table text-center align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">ID</th>
+                        <th style="width: 30%;">NAME</th>
+                        <th style="width: 20%;">CATEGORY</th>
+                        <th style="width: 20%;">PRICE (UGX)</th>
+                        <th style="width: 10%;">QUANTITY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>#{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.price|intcomma }}</td>
+                        <td>{{ product.quantity }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No products available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

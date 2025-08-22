@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventory Dashboard with Validation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f6f6f6; margin: 0; padding: 20px; }
+    .container { display: flex; gap: 20px; flex-wrap: wrap; }
+    .card {
+      background: white; padding: 16px; border-radius: 8px; 
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1); flex: 1; min-width: 280px;
+    }
+    .kpi { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .kpi h3 { margin: 0; font-size: 14px; color: gray; }
+    .kpi .value { font-size: 20px; font-weight: bold; }
+    .ok { color: green; } .warn { color: red; }
+    h2 { margin-top: 0; }
+
+    form label { display: block; margin: 8px 0 4px; font-size: 14px; }
+    form input {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    form input.error {
+      border: 1px solid red;
+    }
+    .error-msg {
+      font-size: 12px; color: red; margin: 2px 0 6px;
+    }
+    button {
+      margin-top: 10px; padding: 10px; border: none; border-radius: 4px;
+      cursor: pointer; font-weight: bold;
+    }
+    .save { background: orange; color: white; }
+    .clear { background: #ccc; margin-left: 8px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: black; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="kpi"><h3>Sales</h3><div class="value">UGX 50,000,000</div></div>
+      <div class="kpi"><h3>Orders</h3><div class="value">UGX 15,000,000</div></div>
+      <div class="kpi"><h3>In stock</h3><div class="value ok">UGX 42,000,000</div></div>
+      <div class="kpi"><h3>Out of stock</h3><div class="value warn">5</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Add Product</h2>
+      <form id="productForm">
+        <label>Product Name</label>
+        <input type="text" id="name">
+        <div class="error-msg" id="name-error"></div>
+
+        <label>Category</label>
+        <input type="text" id="category">
+        <div class="error-msg" id="category-error"></div>
+
+        <label>Price</label>
+        <input type="number" id="price">
+        <div class="error-msg" id="price-error"></div>
+
+        <label>Quantity</label>
+        <input type="number" id="quantity">
+        <div class="error-msg" id="quantity-error"></div>
+
+        <label>Color</label>
+        <input type="text" id="color">
+        <div class="error-msg" id="color-error"></div>
+
+        <button type="submit" class="save">SAVE</button>
+        <button type="reset" class="clear">CLEAR</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>ID</th><th>NAME</th><th>CATEGORY</th><th>PRICE (UGX)</th><th>QUANTITY</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>#645341</td><td>Samsung s25+ Ultra</td><td>Smart Phones</td><td>6,900,000</td><td>981</td></tr>
+        <tr><td>#645346</td><td>Gucci XXL Shirt</td><td>Fashion</td><td>500,000</td><td>100</td></tr>
+        <tr><td>#645342</td><td>XL Zara Shirt</td><td>Fashion</td><td>600,000</td><td>56</td></tr>
+        <tr><td>#645344</td><td>iPhone 15</td><td>Smart Phones</td><td>7,900,000</td><td>752</td></tr>
+        <tr><td>#645343</td><td>Smart home Curtain</td><td>Interior Design</td><td>500,000</td><td>30</td></tr>
+        <tr><td>#645345</td><td>Spectrum Laptop 14.6 Inc</td><td>Laptops</td><td>15,800,000</td><td>144</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+const form = document.getElementById("productForm");
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+  let valid = true;
+
+  ["name","category","price","quantity","color"].forEach(field => {
+    const input = document.getElementById(field);
+    const err = document.getElementById(field+"-error");
+    if(!input.value.trim()) {
+      input.classList.add("error");
+      err.textContent = "Invalid field";
+      valid = false;
+    } else {
+      input.classList.remove("error");
+      err.textContent = "";
+    }
+  });
+
+  if(valid) alert("Product saved!");
+});
+</script>
+<div class="container mt-3">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+</body>
+</html>
+

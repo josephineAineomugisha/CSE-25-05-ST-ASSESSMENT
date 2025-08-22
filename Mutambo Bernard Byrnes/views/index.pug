@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  .dashboard
+    .top-grid
+      .left
+        .stats
+          .card
+            .stat-value UGX #{(dashboard && dashboard.salesTotal) ? dashboard.salesTotal.toLocaleString() : '0'}
+            .stat-label Sales
+          .divider
+          .card
+            .stat-value UGX #{(dashboard && dashboard.ordersTotal) ? dashboard.ordersTotal.toLocaleString() : '0'}
+            .stat-label Orders
+        .stats.secondary
+          .small-card
+            .stat-value.green UGX #{(dashboard && dashboard.inStockValue) ? dashboard.inStockValue.toLocaleString() : '0'}
+            .stat-label In stock
+          .small-card
+            .stat-value.red #{(dashboard && dashboard.outOfStockCount) ? dashboard.outOfStockCount : 0}
+            .stat-label Out of stock
+      .right
+        .form-panel
+          h2 Add Product
+          if success
+            .banner.success Product has been added successfully!
+          form#productForm(novalidate)
+            input(type="hidden" name="code" value="#"+Date.now())
+            input.input(name="name" placeholder="Product Name")
+            input.input(name="category" placeholder="Category")
+            input.input(name="price" placeholder="Price")
+            input.input(name="quantity" placeholder="Quantity")
+            .row
+              input.input(name="color" placeholder="Color")
+              input.input(name="imagePath" placeholder="Upload Image")
+            .actions
+              button#saveBtn(type="submit") SAVE
+              button#clearBtn(type="button") CLEAR
+
+    .table-wrapper
+      table
+        thead
+          tr
+            th ID
+            th NAME
+            th CATEGORY
+            th PRICE(UGX)
+            th QUANTITY
+        tbody
+          if products && products.length
+            each p in products
+              tr
+                td= p.code
+                td= p.name
+                td= p.category
+                td= p.price.toLocaleString()
+                td= p.quantity
+          else
+            tr
+              td(colspan="5") No products yet
+
+
