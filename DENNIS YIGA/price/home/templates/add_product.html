@@ -1,0 +1,15 @@
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="text" name="name" class="form-control mb-2" placeholder="Product Name">
+  <input type="text" name="category" class="form-control mb-2" placeholder="Category">
+  <input type="number" name="price" class="form-control mb-2" placeholder="Price">
+  <input type="number" name="quantity" class="form-control mb-2" placeholder="Quantity">
+  <input type="text" name="color" class="form-control mb-2" placeholder="Color">
+  <input type="file" name="image" class="form-control mb-2">
+  <button type="submit" class="btn btn-warning">Save</button>
+</form>
+            <button type="reset" class="btn btn-secondary">CLEAR</button>
+            </form>
+        </div>
+        </div>
+    </div>
