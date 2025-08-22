@@ -1,0 +1,57 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Document
+  link(rel='stylesheet' href='bootstrap-5.3.6-dist/css/bootstrap.css')
+  link(rel='stylesheet' href='index.css')
+.container-lg.align-center.m-5.align-items-center
+  .row
+    .col-md-6
+      .row.card.m-2
+        .col-4
+          h3 UGX 50000000
+          p Sales
+        .col-4
+          h3 UGX15000000
+          p Orders
+      .row.align-items-center
+        .col-4.card.m-2
+          h3.text-succes UGX 42000000
+          p In stock
+        .col-4.card.m-2
+          h3.text-danger 5
+          p Out of stock
+    .col-md-6.card
+      form#form.form.card-body(action='/' method='post')
+        h3 Add Products
+        .mb-3
+          input#productName.productName.form-control.d-block(type='text' name='product' placeholder='Product-Name')
+          p#productNameArea.text-danger
+        .mb-3
+          input#category.category.form-control(type='text' name='category' placeholder='Category')
+          p#categoryArea.text-danger
+        .mb-3
+          input#price.price.form-control(type='number' name='price' placeholder='price')
+          p#productNameArea.text-danger
+        .mb-3
+          input#quatity.quatity.form-control(type='text' name='quantity' placeholder='Quatity')
+          p#productNameArea.text-danger
+        .mb-3
+          input#color.color.d-inline(type='text' name='color' placeholder='Color')
+          p#productNameArea.text-danger
+          input#img.img(type='text' name='img' placeholder='Upload image...')
+          p#productNameArea.text-danger
+        .mb-3
+          button#submit.btn.btn-warning.p-2.m2(type='submit') Save
+          button#reset.btn.btn-light(type='reset') Clear
+.container-lg
+  table
+    tr
+      th id
+      th NAME
+      th CATEGORY 
+      th PRICE 
+      th QUANTITY
+    tr
+script(src='sandbox.js')
