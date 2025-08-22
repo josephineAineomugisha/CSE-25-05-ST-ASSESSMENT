@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    .layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Left side for cards, right for form */
+  grid-template-rows: auto auto; /* Top row for cards+form, bottom row for table */
+  gap: 50px;
+  padding: 50px;
+}
+
+/* Cards layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Force 4 equal cards per row */
+  gap: 50px;
+}
+
+.card {
+  width: 100%;
+  height: 100%; /* Makes them consistent in height */
+}
+
+/* Responsive: On smaller screens, stack into 2 per row */
+@media (max-width: 992px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* On very small screens, stack one card per row */
+@media (max-width: 576px) {
+  .layout {
+    grid-template-columns: 1fr; /* Stack form below cards */
+  }
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Cards Section -->
+  <div class="cards-container">
+    <div class="cards-grid">
+      <div class="card p-4">
+        <h6 class="text-muted">Sales</h6>
+        <h3 class="fw-semibold">UGX 50,000,000</h3>
+        <span class="badge bg-success"><i class="fa-solid fa-house"></i> this month</span>
+      </div>
+
+      <div class="card p-4">
+        <h6 class="text-muted">Orders</h6>
+        <h3 class="fw-semibold">UGX 30,000,000</h3>
+        <span class="badge bg-primary"><i class="fa-solid fa-suitcase"></i> this month</span>
+      </div>
+
+      <div class="card p-4">
+        <h6 class="text-muted">In Stock</h6>
+        <h3 class="fw-semibold">UGX 20,000,000</h3>
+        <span class="badge bg-danger"><i class="fa-solid fa-truck"></i> this month</span>
+      </div>
+
+      <div class="card p-4">
+        <h6 class="text-muted">Out of Stock</h6>
+        <h3 class="fw-semibold">5</h3>
+        <span class="badge bg-success"><i class="fa-solid fa-user"></i> this month</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <form action="/products" method="POST" class="product-form card p-3">
+    <h4 class="mb-3">Add New Product</h4>
+    <div class="mb-3">
+      <label for="productName" class="form-label">Product Name</label>
+      <input type="text" class="form-control" id="productName" placeholder="Enter product name" name="productName">
+    </div>
+    <div class="mb-3">
+      <label for="productCategory" class="form-label">Category</label>
+      <input type="text" class="form-control" id="productCategory" placeholder="Enter product category" name="productCategory">
+    </div>
+    <div class="mb-3">
+      <label for="productPrice" class="form-label">Price</label>
+      <input type="text" class="form-control" id="productPrice" placeholder="Enter product price" name="productPrice">
+      <div class="mb-3">
+      <label for="productQuantity" class="form-label">Quantity</label>
+      <input type="number" class="form-control" id="productQuantity" placeholder="Enter product quantity" name="productQuantity">
+      </div>
+      <div class="mb-3">
+      <label for="productColor" class="form-label">Color</label>
+      <input type="text" class="form-control" id="productColor" placeholder="Enter product color" name="productColor">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">save</button>
+    <button type="reset" class="btn btn-danger">clear</button>
+    
+  </form>
+
+  <!-- Table Section -->
+  <div class="product-table">
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>CATEGORY</th>
+          <th>PRICE(UGX)</th>
+          <th>QUANTITY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ID2222</td>
+          <td>JOHN SMITH</td>
+          <td>PHONE</td>
+          <td>UGX 10,000</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td>ID2223</td>
+          <td>JANE DOE</td>
+          <td>LAPTOP</td>
+          <td>UGX 30,000</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>ID2224</td>
+          <td>ALICE JOHNSON</td>
+          <td>TABLET</td>
+          <td>UGX 25,000</td>
+          <td>75</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  // Client-side JavaScript can be added here
+  // form validations
+    document.addEventListener("DOMContentLoaded", function () {
+    let productform = document.querySelector("#productform"); // use # for id
+    productform.addEventListener("submit", function (event) {
+      event.preventDefault(); // prevent default form submission
+      let productname = document.getElementById("productName").value;       // fixed ID
+      let productcategory = document.getElementById("productCategory").value; // fixed ID
+      let productprice = document.getElementById("productPrice").value;
+      let productquantity = document.getElementById("productQuantity").value;
+      let productcolor = document.getElementById("productColor").value;
+      let errorMessage = document.getElementById("errorMessage");
+      if (!productname || !productcategory || !productprice || !productquantity || !productcolor) {
+        errorMessage.textContent = "Please fill out all the fields";
+        return;
+      }
+      if (isNaN(productprice) || productprice <= 0) {
+        errorMessage.textContent = "Please enter a valid price";
+        return;
+      }
+      if (isNaN(productquantity) || productquantity < 0) {
+        errorMessage.textContent = "Please enter a valid quantity";
+        return;
+      }
+      // if everything is valid, submit form
+      errorMessage.textContent = "";
+      productform.submit();
+    });
+  });
+</script>
+
+<script src="/scripts.js"></script>  
+</body>
+</html>
+

@@ -1,0 +1,27 @@
+{
+  "name": "shimmybakecura",
+  "version": "1.0.0",
+  "description": "my assesment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shimmymary98/CSE-25-05-ST-ASSESSMENT.git"
+  },
+  "author": "shimmy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shimmymary98/CSE-25-05-ST-ASSESSMENT/issues"
+  },
+  "homepage": "https://github.com/shimmymary98/CSE-25-05-ST-ASSESSMENT#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.2",
+    "nodemon": "^3.1.10",
+    "pug": "^3.0.3"
+  }
+}
