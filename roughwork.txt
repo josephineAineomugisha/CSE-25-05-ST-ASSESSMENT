@@ -1,0 +1,26 @@
+script.
+            const form = document.getElementById('form1');
+            form.addEventListener('submit', function (event) {
+                const name = document.getElementById('name').value.trim();
+                const category = document.getElementById('category').value;
+                const quantity = Number(document.getElementById('quantity').value);
+                const price = Number(document.getElementById('price').value);
+                const errorMsg = document.getElementById('errorMsg');
+                errorMsg.textContent = "";
+
+                if (!name || !category) {
+                    errorMsg.textContent = "Please fill out all the fields";
+                    event.preventDefault(); // Prevent form submission if there's an error
+                    return;
+                }
+                if (price < 0) {
+                    errorMsg.textContent = "Price must be a positive number";
+                    event.preventDefault();
+                    return;
+                }
+                if (quantity < 0) {
+                    errorMsg.textContent = "Quantity must be a positive number";
+                    event.preventDefault();
+                    return;
+                }
+            });
